@@ -1,0 +1,21 @@
+Downloader (mirror)
+Nástroj který na příkazové řádce z URL(HTTP) vytvoří lokální kopii webových stránek.
+obecné parametry:
+	--recursive - povolí rekurzivní stahování. default=false
+	--leaf-urls-to-local-file - nestažené URL (např. nad limit rekurze) jsou nahrazeny odkazem na "Page does not exist." lokální soubor. default=false
+omezení rekurze:
+	--max-recursion-depth - hloubka rekurze. default=1
+	--accept-regex - regulární výraz, které stránky povolit stáhnout. Ovlivní pouze rekurzi, ne první stahovanou stránku.
+	--reject-regex - regulární výraz, které stránky zakázat stáhnout. Ovlivní pouze rekurzi, ne první stahovanou stránku.
+další parametry:
+	--download-images - zdali stahovat obrázky. default=false
+	--thread-cnt - počet vláken na stahování. pokud není implementováno, vypíše varování. default=10
+	**Will always use BFS** --crawler-type - styl procházení stránek. Choose from=[BFS, DFS, html-first]. default=BFS
+	--help - zobrazí návod.
+	--no-file-overwrite - Umožní zakázat opakované stahování již stažených a rozparsovaných stránek (z předchozích běhů utilitky).
+	--out-dir - umožňuje určit výstup programu.
+
+A hlavně:
+	--url - požadovaná URL ke stažení, required=true
+
+Pro regulární výrazy bude použita standardní knihovna. Nástroj stahuje pouze HTML, CSS a obrázky. Pro parsování HTML bude použita knihovna libxml2. Pro vlákna bude použita standardní knihovna. Pro případnou podporu HTTPS bude použito openssl. Stažené soubory budou stahovány do adresářové struktury odpovídající jejich zdrojové URL, čímž se provede i kontrola proti opakovanému stahování (pokud je uveden parametr --no-file-overwrite). Pokud uveden není, Bude se v paměti držet neseřazená množina stažených stránek.

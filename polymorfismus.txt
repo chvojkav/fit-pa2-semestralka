@@ -1,0 +1,52 @@
+base class Action
+    - reprezentuje úkol, který je potřeba provést
+    - má rozhraní 'run()', které vykoná úkol a vrátí seznam akcí, které je v návaznosti potřeba provést
+    - obsahuje prioritu.
+    - umožní existenci univerzálních pracovních vláken, která se budou synchronizovat pomocí vytváření dalších instancí, umožní případnou prioritizaci úkolů (např. nejdříve zpracovávat a pak teprve stahovat další)
+
+class Downloading extends Action
+    - reprezentuje stáhnutí souboru
+    - implementuje run() - stará se o samotné stahování
+
+class Saving extends Action
+    - implementuje run() - uloží data do souboru
+
+base class Processing extends Action
+    - implementuje run() - používá process()
+    - má rozhraní 'process()', které zpracuje (např. nahradí odkazy) soubor a vrátí seznam akcí, které je v návaznosti na zpracování potřeba udělat
+    - tento polymorfismus umožní snadné přidání nového druhu zpracování (třeba budeme chtít komprimovat obrázky)
+
+class Html extends Processing
+    - implementuje process() - najití odkazů, kontrola rekurze, náhrada odkazů.
+
+class Css extends Processing
+    - implementuje process() - Najití obrázků, kontrola rekurze, náhrada odkazů.
+
+--------------------------------------------------------------------------------
+class ActionMediator
+    - mediator pattern - Vždycky jsem si ho chtěl zkusit. =)
+    - Obsahuje callback, kterým mohou provedené Action oznámit, že jsou dokončené
+    - loose coupling mezi různými Action, veškerý workflow aplikace je na jednom místě
+
+--------------------------------------------------------------------------------
+base class UrlDecider
+    - má rozhraní decide(url), která přijme/zamítne zpracování nějaké URL.
+
+class CompositeDecider extends UrlDecider
+    - composite pattern
+    - Umožní sestavení komplexního rozhodování 'přijetí' URL z více rozhodovacích objektů.
+    - Umožní zapínat/vypínat kontroly (rekurze, regulární výraz, ...??) v závislosti na vstupních parametrech programu.
+
+class RecursionDecider extends UrlDecider
+    - reprezentuje rozhodnutí url na základě hloubky rekurze.
+
+class RegexDecider extends UrlDecider
+    - reprezentuje rozhodnutí url na základě regulárního výrazu
+
+class NotDecider extends UrlDecider
+    - reprezentuje negaci rozhodnutí
+
+--------------------------------------------------------------------------------
+class CAppParam
+    - Určitě je zde potenciál na polymorfismus pro různé typy, pro různé kontroly apod. Uvidíme, jestli se do toho pustím.
+
